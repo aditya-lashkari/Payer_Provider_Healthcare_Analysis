@@ -1,0 +1,62 @@
+table Physcian_Lookup
+	lineageTag: 0f2cc991-d109-4368-87cc-f1d7146994f6
+
+	column dimPhysicianPK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: afd30dd7-8383-4e9f-9ff2-c63ef4a73beb
+		summarizeBy: none
+		sourceColumn: dimPhysicianPK
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProviderNpi
+		dataType: int64
+		formatString: 0
+		lineageTag: 10c03b04-a281-4cc6-b842-8013ee44e4c3
+		summarizeBy: sum
+		sourceColumn: ProviderNpi
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProviderName
+		dataType: string
+		lineageTag: 4e1d69d3-f2ca-47dd-8d67-03c2321b96cc
+		summarizeBy: none
+		sourceColumn: ProviderName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecialityCodeFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 272eb531-a966-473d-a651-cc4d87ae0a61
+		summarizeBy: none
+		sourceColumn: SpecialityCodeFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProviderFTE
+		dataType: double
+		lineageTag: a506ffa7-af66-4a31-84e9-c007364a66c3
+		summarizeBy: sum
+		sourceColumn: ProviderFTE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Physcian_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimPhyscian.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimPhysicianPK", Int64.Type}, {"ProviderNpi", Int64.Type}, {"ProviderName", type text}, {"SpecialityCode", Int64.Type}, {"ProviderFTE", type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"SpecialityCode", "SpecialityCodeFK"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

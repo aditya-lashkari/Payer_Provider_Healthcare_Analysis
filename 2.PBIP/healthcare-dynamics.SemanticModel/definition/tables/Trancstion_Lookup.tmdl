@@ -1,0 +1,49 @@
+table Trancstion_Lookup
+	lineageTag: c89278f5-0451-4f51-806b-ba250c5e6296
+
+	column dimTransactionPK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 8522456c-d027-4f5a-9f39-342906b39a5d
+		summarizeBy: none
+		sourceColumn: dimTransactionPK
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionType
+		dataType: string
+		lineageTag: 9022227c-b7d8-42e8-9480-1ce09bf24aff
+		summarizeBy: none
+		sourceColumn: TransactionType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction
+		dataType: string
+		lineageTag: 776870db-ae79-4911-bb7a-17523010328f
+		summarizeBy: none
+		sourceColumn: Transaction
+
+		annotation SummarizationSetBy = Automatic
+
+	column AdjustmentReason
+		dataType: string
+		lineageTag: 6420e694-f25f-4901-a865-8ec24b389b0a
+		summarizeBy: none
+		sourceColumn: AdjustmentReason
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Trancstion_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimTrancstion.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimTransactionPK", Int64.Type}, {"TransactionType", type text}, {"Transaction", type text}, {"AdjustmentReason", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

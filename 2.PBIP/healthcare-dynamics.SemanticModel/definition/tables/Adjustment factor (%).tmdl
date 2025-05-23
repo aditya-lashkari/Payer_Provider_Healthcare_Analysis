@@ -1,0 +1,33 @@
+table 'Adjustment factor (%)'
+	lineageTag: a435a397-b722-48f7-91ef-71870531aa35
+
+	measure 'Adjustment factor (%) Value' = SELECTEDVALUE('Adjustment factor (%)'[Adjustment factor (%)], 0)
+		lineageTag: 2c8a1de1-2e5f-4de8-b9d1-bd24ade8c590
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Adjustedgrossexpense = (SUM(FactTable[Gross Expenses]))*(1+ 'Adjustment factor (%)'[Adjustment factor (%) Value])
+		lineageTag: 9abd56fa-2014-46af-9f34-a940ce6d870e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Adjustment factor (%)'
+		lineageTag: 26e84984-1567-4ed2-b493-18e57c00e729
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Adjustment factor (%)' = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.1)
+
+	annotation PBI_Id = a86769813c9940c6bebe15c47842d0ab
+

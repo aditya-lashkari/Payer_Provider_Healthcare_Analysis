@@ -1,0 +1,49 @@
+table DiagnosisCode_Lookup
+	lineageTag: f8635ace-4679-4bb7-bcc1-5f760dd39048
+
+	column dimDiagnosisCodePK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 00fcb4a9-f99d-4ba4-95e6-eafb8e2d28a8
+		summarizeBy: none
+		sourceColumn: dimDiagnosisCodePK
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisCode
+		dataType: string
+		lineageTag: adf1e722-2e70-4058-bf72-0d932ef65548
+		summarizeBy: none
+		sourceColumn: DiagnosisCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisCodeDescription
+		dataType: string
+		lineageTag: 77c2de27-64c6-48c7-9dad-761565b7901b
+		summarizeBy: none
+		sourceColumn: DiagnosisCodeDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisCodeGroup
+		dataType: string
+		lineageTag: 315c0ff9-b38e-4c55-871e-c685de025417
+		summarizeBy: none
+		sourceColumn: DiagnosisCodeGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DiagnosisCode_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimDiagnosisCode.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimDiagnosisCodePK", Int64.Type}, {"DiagnosisCode", type text}, {"DiagnosisCodeDescription", type text}, {"DiagnosisCodeGroup", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

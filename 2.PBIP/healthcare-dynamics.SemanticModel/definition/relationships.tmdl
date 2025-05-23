@@ -1,0 +1,67 @@
+relationship ef07f678-a38d-4aa5-bc93-634219012f14
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_a249ec34-7878-4151-b4c2-6a7b636bf3c0.Date
+
+relationship 4266d993-8b55-4511-a8be-29be1ec75a82
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.MonthYear
+	toColumn: LocalDateTable_ef34a3ff-4085-4eda-a1df-b58a8db8be46.Date
+
+relationship 1ec57380-a6ad-4167-a014-b869d44fdd9d
+	fromColumn: FactTable.dimCPTCodeFK
+	toColumn: CptCode_Lookup.dimCPTCodePK
+
+relationship 74027f06-fb82-49fa-a33b-f298d940fe48
+	fromColumn: FactTable.dimDiagnosisCodeFK
+	toColumn: DiagnosisCode_Lookup.dimDiagnosisCodePK
+
+relationship ff42d36c-bb30-4d45-81a7-42f391cfc8b6
+	fromColumn: FactTable.dimHospitalFK
+	toColumn: Hospital_Lookup.dimHospitalPK
+
+relationship 29bf3b58-5472-4639-a52b-8d59bf8e7ded
+	fromColumn: FactTable.dimPatientFK
+	toColumn: Patient_Lookup.dimPatientPK
+
+relationship 106bf874-22f8-4219-9596-6b24cf2d482a
+	fromColumn: FactTable.dimTransactionFK
+	toColumn: Trancstion_Lookup.dimTransactionPK
+
+relationship 8a4085d2-6fb3-4e79-8648-86ee563da410
+	fromColumn: Physcian_Lookup.SpecialityCodeFK
+	toColumn: Speciality_Lookup.SpecialityCodePK
+
+relationship f1e93211-b535-4bc0-9951-bad2169fd5bb
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactTable.dimPhysicianFK
+	toColumn: Physcian_Lookup.dimPhysicianPK
+
+relationship b2baae95-93fe-4a44-bd3b-e9e72d54308e
+	fromColumn: FactTable.dimDateServicePK
+	toColumn: DimDate.Date
+
+relationship c9e01a17-cf3b-4550-97bd-ff9e653594bc
+	isActive: false
+	fromColumn: FactTable.dimDatePostPK
+	toColumn: DimDate.Date
+
+relationship 4dbda24e-0393-4fb8-875f-dc75bb0f4340
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.'Start of Month'
+	toColumn: LocalDateTable_2c2a61ff-39c4-4f0c-97ac-a6a7efb97db4.Date
+
+relationship 0aac270f-953e-4d46-a716-400699dc5bed
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.'End of Month'
+	toColumn: LocalDateTable_39bba987-77ed-4008-8322-dd29e2cc2f25.Date
+
+relationship b7755729-6fe2-4791-831e-76e2267653b2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Patient_Lookup.DateOfBirth
+	toColumn: LocalDateTable_d31a6fc7-dba3-4410-a53a-de9bb2d5b1c2.Date
+
+relationship c9360cd1-f097-4104-a3ea-c9fb974f5904
+	fromColumn: FactTable.dimPayerFK
+	toColumn: Payer_Lookup.dimPayerPK
+

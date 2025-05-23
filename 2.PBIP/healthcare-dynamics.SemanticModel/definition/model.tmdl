@@ -1,0 +1,43 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+/// Errors in queries that were loaded on 25-10-2023 19:21:13.
+queryGroup 'Query Errors - 25-10-2023 19:21:13'
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation PBI_QueryOrder = ["CptCode_Lookup","DimDate","DiagnosisCode_Lookup","Hospital_Lookup","Patient_Lookup","Payer_Lookup","Physcian_Lookup","Speciality_Lookup","Trancstion_Lookup","FactTable","Measure Table","Errors in Physcian_Lookup"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.142.928.0 (25.04)+de52df9f0bb74ad93a80d89c52d63fe6d07e0e1b
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table CptCode_Lookup
+ref table DateTableTemplate_be97c3f8-f201-4a00-a952-d6592f333bdd
+ref table DimDate
+ref table LocalDateTable_a249ec34-7878-4151-b4c2-6a7b636bf3c0
+ref table LocalDateTable_ef34a3ff-4085-4eda-a1df-b58a8db8be46
+ref table DiagnosisCode_Lookup
+ref table Hospital_Lookup
+ref table Patient_Lookup
+ref table Payer_Lookup
+ref table Physcian_Lookup
+ref table Speciality_Lookup
+ref table Trancstion_Lookup
+ref table FactTable
+ref table 'Measure Table'
+ref table LocalDateTable_2c2a61ff-39c4-4f0c-97ac-a6a7efb97db4
+ref table LocalDateTable_39bba987-77ed-4008-8322-dd29e2cc2f25
+ref table LocalDateTable_d31a6fc7-dba3-4410-a53a-de9bb2d5b1c2
+ref table BadDebtTable
+ref table 'Adjustment factor (%)'
+
+ref cultureInfo en-US
+

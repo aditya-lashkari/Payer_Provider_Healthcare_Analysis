@@ -1,0 +1,179 @@
+table 'Measure Table'
+	lineageTag: f8ad7cfa-7c92-4094-8b39-00ec9eb0ddb8
+
+	measure TotalInsurancePay = SUM(FactTable[Insurance_Payment])
+		formatString: 0
+		lineageTag: f3a3282c-f87f-4d7d-a850-0110260c3e49
+
+	measure TotalPatientPay = SUM(FactTable[Patient_Payment])
+		lineageTag: 0cd81acd-6892-4369-80a8-b5420f954a50
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AverageInsurancePay = AVERAGE(FactTable[Insurance_Payment])
+		lineageTag: 0c316129-ed81-453a-b25e-d476c7c96cff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AveragePatientPay = AVERAGE(FactTable[Patient_Payment])
+		lineageTag: 58176d22-2869-4741-919f-3cb3347b464f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalPayment = SUM(FactTable[Insurance_Payment]) + SUM(FactTable[Patient_Payment])
+		lineageTag: 4e98f27a-628e-4646-839e-f2302f999e3f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure %InsurancePay = [TotalInsurancePay]/[TotalPayment]
+		lineageTag: 9b62b236-9a9c-4cbd-9e5e-b65183288f73
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CountPatient = COUNT(Patient_Lookup[dimPatientPK])
+		formatString: 0
+		lineageTag: b1595786-7860-42a9-8a38-e98f7120a576
+
+	measure DistinctPatient = DISTINCTCOUNT(FactTable[dimPatientFK])
+		formatString: 0
+		lineageTag: 1b5b4073-7883-4c8f-877b-01e683b92d04
+
+	measure Insurance_Tobacco = CALCULATE([TotalInsurancePay],Patient_LookUp[Tobacco] = "Yes")
+		formatString: 0
+		lineageTag: 04ad4dfb-287a-4c7f-a67f-d775bc097c90
+
+	measure Insurance_A+ = CALCULATE([TotalInsurancePay], Patient_LookUp[BloodGroup] = "A+")
+		formatString: 0
+		lineageTag: 27ff36c2-e9eb-453a-bb8b-2ed6a60166e4
+
+	measure Avg_Pay_Females_B+ =
+			CALCULATE(
+			    [AveragePatientPay],
+			    Patient_LookUp[PatientGender] = "Female",
+			    Patient_LookUp[BloodGroup] = "B+"
+			)
+		lineageTag: 3e5a559e-84ef-436a-973e-4609e1d95d97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Avg_Pay_Males_B+ =
+			CALCULATE(
+			    [AveragePatientPay],
+			    Patient_LookUp[PatientGender] = "Male",
+			    Patient_LookUp[BloodGroup] = "B+"
+			)
+		lineageTag: da3e259b-c7c1-453d-bdd0-6f0412b056d9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure FemalePatient =
+			CALCULATE(
+			    [CountPatient],
+			    Patient_LookUp[PatientGender] = "Female"
+			)
+		formatString: 0
+		lineageTag: 6e99c0f5-fc6f-4667-aed7-20a111a0b76b
+
+	measure TotalFemales = CALCULATE([FemalePatient],ALL(Patient_LookUp))
+		formatString: 0
+		lineageTag: 51514083-c835-4f12-9a3f-993c3c8a215f
+
+	measure %Females = DIVIDE([FemalePatient],[TotalFemales])
+		lineageTag: d95726a5-e04d-4564-978e-3abe0779ff6d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MalePatient =
+			CALCULATE(
+			    [CountPatient],
+			    Patient_LookUp[PatientGender] = "Male"
+			)
+		formatString: 0
+		lineageTag: e5658a07-2a7a-46e8-aa57-e2824de5dd3c
+
+	measure TotalMales = CALCULATE([MalePatient],ALL(Patient_LookUp))
+		formatString: 0
+		lineageTag: d71a8bae-e02c-462a-9791-f58e52514cbc
+
+	measure %Males = DIVIDE([MalePatient],[TotalMales])
+		lineageTag: ad73f462-0a02-4d24-aa63-faf52716dec7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure YTDPayment = calculate([TotalPayment],DATESYTD(DimDate[Date]))
+		lineageTag: 12dcaad3-4da3-4933-b2c0-f92f314e1bbf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous MonthPay' = calculate([TotalPayment],DATEADD(DimDate[Date],-1,MONTH))
+		lineageTag: 4b145d45-9eb8-4d49-ac0f-fd903a9d6e9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 10DayROllingPay = calculate([TotalPatientPay],DATESINPERIOD(DimDate[Date],max(DimDate[Date]),-10,DAY))
+		lineageTag: 539f8d6d-accc-4c0e-8719-07eaf60de113
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalPayMA =
+			DIVIDE(CALCULATE
+			([TotalPayment], DATESINPERIOD(DimDate[Date],MAX(DimDate[Date]),-10,DAY)),10)
+		lineageTag: a6dcebf9-6367-4ffa-ba74-5cf9c316f609
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalGrossExpense = SUM(FactTable[Gross Expenses])
+		lineageTag: e220c87f-aaba-4d6c-b509-10ba87c2071f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure BadDebts =
+			CALCULATE([TotalGrossExpense],
+			FactTable[dimTransactionFK] = 55711 || FactTable[dimTransactionFK] = 48429 || FactTable[dimTransactionFK] = 55042 )
+		lineageTag: 6f7a07a9-8c9c-4696-9973-e942ebd829e6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ARGE Ratio' = SUM(FactTable[AR])/SUM(FactTable[Gross Expenses])
+		formatString: 0%;-0%;0%
+		lineageTag: d133af80-d074-43b4-b906-f55c7a7f77e2
+
+	measure 'IPTP Ratio' = SUM(FactTable[Insurance_Payment])/[TotalPayment]
+		formatString: 0%;-0%;0%
+		lineageTag: d16138b1-3736-413c-9af4-45077d3b20a2
+
+	measure %PaymentPay = [TotalPatientPay]/[TotalPayment]
+		lineageTag: 46872630-faea-4e60-a1b2-bc0839e1f25a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AverageDeficit = AVERAGEX(FactTable, FactTable[Gross Expenses] - [TotalPayment])
+		lineageTag: efb49687-4ef3-4b98-ae33-34c692ecd61e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure QTDPayment =
+			CALCULATE([TotalPayment],
+			    DATESQTD(DimDate[Date])
+			)
+		lineageTag: fa0aa5cc-64dd-4702-8683-476c6849cf91
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalDeficit = SUMX(FactTable, FactTable[Gross Expenses] - [TotalPayment])
+		lineageTag: c4114712-7194-4c83-a18f-f3ac84903daa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Measure Table' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

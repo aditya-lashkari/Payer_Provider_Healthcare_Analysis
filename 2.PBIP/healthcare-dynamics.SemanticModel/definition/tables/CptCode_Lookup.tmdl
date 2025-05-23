@@ -1,0 +1,49 @@
+table CptCode_Lookup
+	lineageTag: 3b6f9283-8614-41d5-a9cf-c1c95fc0b447
+
+	column dimCPTCodePK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: b3ed20d5-f218-417a-9b31-7887a2de1685
+		summarizeBy: none
+		sourceColumn: dimCPTCodePK
+
+		annotation SummarizationSetBy = Automatic
+
+	column CptCode
+		dataType: string
+		lineageTag: 159bc3d7-9ed6-4a17-b170-9a6927122cb6
+		summarizeBy: none
+		sourceColumn: CptCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CptDesc
+		dataType: string
+		lineageTag: 2d88caf8-3efa-4286-9765-7bd255af149f
+		summarizeBy: none
+		sourceColumn: CptDesc
+
+		annotation SummarizationSetBy = Automatic
+
+	column CptGrouping
+		dataType: string
+		lineageTag: 7615a1a2-fc4e-4ac0-aaa8-a430ff8f80de
+		summarizeBy: none
+		sourceColumn: CptGrouping
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CptCode_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimCptCode.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimCPTCodePK", Int64.Type}, {"CptCode", type text}, {"CptDesc", type text}, {"CptGrouping", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

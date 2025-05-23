@@ -1,0 +1,50 @@
+table Speciality_Lookup
+	lineageTag: d4262559-2d9c-4d8b-8d47-851056f6ae3f
+
+	column SpecialityCodePK
+		dataType: string
+		isKey
+		lineageTag: 13f4ed49-80d1-4ec7-ac39-ac9baef57d9d
+		summarizeBy: none
+		sourceColumn: SpecialityCodePK
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProviderSpecialty
+		dataType: string
+		lineageTag: b652e60a-ab03-4855-b8f7-43c7613135ce
+		summarizeBy: none
+		sourceColumn: ProviderSpecialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecialityType
+		dataType: string
+		lineageTag: 714b69b4-a709-4a86-966d-5182c82deb41
+		summarizeBy: none
+		sourceColumn: SpecialityType
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecialityDesc
+		dataType: string
+		lineageTag: 6f7f4d44-5aa5-4400-8172-1c8e8b3e15ae
+		summarizeBy: none
+		sourceColumn: SpecialityDesc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Speciality_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimSpeciality.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"SpecialityCode", type text}, {"ProviderSpecialty", type text}, {"SpecialityType", type text}, {"SpecialityDesc", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"SpecialityCode", "SpecialityCodePK"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,33 @@
+table Payer_Lookup
+	lineageTag: 96a6a792-6db8-49da-915e-56aa83174e5f
+
+	column dimPayerPK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: d49dbadf-da29-46df-83c8-dcee7b461cbd
+		summarizeBy: none
+		sourceColumn: dimPayerPK
+
+		annotation SummarizationSetBy = Automatic
+
+	column PayerName
+		dataType: string
+		lineageTag: 23b88ec2-1bd9-4cd1-bcf6-6284162e84df
+		summarizeBy: none
+		sourceColumn: PayerName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Payer_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimPayer.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimPayerPK", Int64.Type}, {"PayerName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,40 @@
+table Hospital_Lookup
+	lineageTag: 3ee14b08-9680-460f-b678-942450d3bc37
+
+	column dimHospitalPK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: ad5e4bd7-fa5d-416b-9055-30fd821600f8
+		summarizeBy: none
+		sourceColumn: dimHospitalPK
+
+		annotation SummarizationSetBy = Automatic
+
+	column HospitalName
+		dataType: string
+		lineageTag: 5738eded-0dc2-4c14-869f-f5ba1193495a
+		summarizeBy: none
+		sourceColumn: HospitalName
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsHospitalNameLong = if(len(Hospital_Lookup[HospitalName])>20,"yes","no")
+		lineageTag: d25dbae1-5bee-4ec0-9376-85672bbabc72
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hospital_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimHospital.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimLocationPK", Int64.Type}, {"LocationName", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"dimLocationPK", "dimHospitalPK"}, {"LocationName", "HospitalName"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

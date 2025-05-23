@@ -1,0 +1,233 @@
+table FactTable
+	lineageTag: 7a8a3d22-96b8-42be-9347-669fdde018b0
+
+	column FactTablePK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: c487614c-7494-4bca-8e8b-5c1c22619a1e
+		summarizeBy: sum
+		sourceColumn: FactTablePK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Check Dimension'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a161a77-bf98-4df6-814f-0e15dcc906a1
+		summarizeBy: sum
+		sourceColumn: Check Dimension
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimPatientFK
+		dataType: int64
+		formatString: 0
+		lineageTag: fe277cd4-b8da-436d-a759-2de42809f285
+		summarizeBy: none
+		sourceColumn: dimPatientFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimPhysicianFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 57c31d2e-c66d-4420-bae5-c0ba8f70c0db
+		summarizeBy: none
+		sourceColumn: dimPhysicianFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimDateServicePK
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bad1549f-abce-4970-9bdb-d2d95a8f5b33
+		summarizeBy: none
+		sourceColumn: dimDateServicePK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dimDatePostPK
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 217255f8-13c2-42b0-bf92-388c4eab9422
+		summarizeBy: none
+		sourceColumn: dimDatePostPK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dimCPTCodeFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 2383e160-c2f2-4836-93de-f0229f6b8c6c
+		summarizeBy: none
+		sourceColumn: dimCPTCodeFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimPayerFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 03be7169-f8f4-4817-9581-8b37baebb3e8
+		summarizeBy: none
+		sourceColumn: dimPayerFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimTransactionFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 14d89110-db46-4f19-9876-f906e2535b2a
+		summarizeBy: none
+		sourceColumn: dimTransactionFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimHospitalFK
+		dataType: int64
+		formatString: 0
+		lineageTag: 78e2b67e-2427-4c59-8a87-c7dce8eeb446
+		summarizeBy: none
+		sourceColumn: dimHospitalFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 6376517c-f7a7-4c45-8839-a1b8c81c7a7f
+		summarizeBy: sum
+		sourceColumn: PatientNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimDiagnosisCodeFK
+		dataType: int64
+		formatString: 0
+		lineageTag: cff01557-4ce1-433f-aa7c-eecf1d995d1b
+		summarizeBy: none
+		sourceColumn: dimDiagnosisCodeFK
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPTUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: ae922d42-771c-4832-a682-a00375f2bba5
+		summarizeBy: sum
+		sourceColumn: CPTUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gross Expenses'
+		dataType: double
+		lineageTag: b9cc656d-accd-4c5a-843e-7fb5044224d5
+		summarizeBy: sum
+		sourceColumn: Gross Expenses
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Adjustment
+		dataType: int64
+		formatString: 0
+		lineageTag: a04892d2-0f78-4523-a4cb-997000fdfd6d
+		summarizeBy: sum
+		sourceColumn: Adjustment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Insurance_Payment
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d1fcd37-28f3-4bd6-94c5-6e9775e14d2f
+		summarizeBy: sum
+		sourceColumn: Insurance_Payment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patient_Payment
+		dataType: double
+		lineageTag: cab760fb-d33e-4394-8ad5-016dd5a71b46
+		summarizeBy: sum
+		sourceColumn: Patient_Payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AR
+		dataType: double
+		lineageTag: 8bf6dd1b-f574-4506-9e64-2ebb1415b7f1
+		summarizeBy: sum
+		sourceColumn: AR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Dayoftheweek = WEEKDAY(FactTable[dimDatePostPK],2)
+		formatString: 0
+		lineageTag: bb720a40-3d69-4452-ac15-75dba4ca360e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPTUnitType = IF(FactTable[CPTUnits] = 1, "Single Unit", "Multiple Unit")
+		lineageTag: b78ad66e-184f-4b16-a506-3d2f42fb05e5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalPayment = (FactTable[Insurance_Payment] + FactTable[Patient_Payment])
+		lineageTag: e5247ad8-2983-4caf-be39-25cca0b166e2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PatientGender = RELATED(Patient_Lookup[PatientGender])
+		lineageTag: 4825763f-8865-4cd1-a1f9-19bccd342c09
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientEthinicity = related(Patient_Lookup[Ethinicity])
+		lineageTag: 4ea17fe6-e470-4f50-bd58-d9ad14c82f99
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientCity = related(Patient_Lookup[City])
+		lineageTag: e882cb41-169a-404a-b556-0838807d07e4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionCode = RELATED(Patient_Lookup[RegionCode])
+		lineageTag: 48802caa-d8a9-42c7-859f-f67881b5110f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactTable = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\FactTable-2.csv"),[Delimiter=",", Columns=18, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"FactTablePK", Int64.Type}, {"Check Dimension", Int64.Type}, {"dimPatientPK", Int64.Type}, {"dimPhysicianPK", Int64.Type}, {"dimDateServicePK", type date}, {"dimDatePostPK", type date}, {"dimCPTCodePK", Int64.Type}, {"dimPayerPK", Int64.Type}, {"dimTransactionPK", Int64.Type}, {"dimLocationPK", Int64.Type}, {"PatientNumber", Int64.Type}, {"dimDiagnosisCodePK", Int64.Type}, {"CPTUnits", Int64.Type}, {"Gross Expenses", type number}, {"Adjustment", Int64.Type}, {"Insurance_Payment", Int64.Type}, {"Patient_Payment", type number}, {"AR", type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"dimCPTCodePK", "dimCPTCodeFK"}, {"dimDiagnosisCodePK", "dimDiagnosisCodeFK"}, {"dimLocationPK", "dimLocationFK"}, {"dimPatientPK", "dimPatientFK"}, {"dimPayerPK", "dimPayerFK"}, {"dimPhysicianPK", "dimPhysicianFK"}, {"dimTransactionPK", "dimTransactionFK"}}),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Renamed Columns", {"Adjustment"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Errors",{{"dimLocationFK", "dimHospitalFK"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_ResultType = Table
+

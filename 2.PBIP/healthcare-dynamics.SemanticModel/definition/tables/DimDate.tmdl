@@ -1,0 +1,216 @@
+table DimDate
+	lineageTag: 47793d11-5323-4abf-8dd7-8916e038b4b0
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 8a33ffc0-9181-41cf-8f29-9aaed8ddaace
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: ef07f678-a38d-4aa5-bc93-634219012f14
+			defaultHierarchy: LocalDateTable_a249ec34-7878-4151-b4c2-6a7b636bf3c0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: d08e94c5-d90b-4293-9cf2-a968a5bc7b9d
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 8035c441-f75c-4c3d-b87a-5469b5a0eecf
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthPeriod
+		dataType: int64
+		formatString: 0
+		lineageTag: cb862e75-0713-4de6-b306-77d216710025
+		summarizeBy: sum
+		sourceColumn: MonthPeriod
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d56e1ac8-3098-47bc-bb51-028acd63fd88
+		summarizeBy: none
+		sourceColumn: MonthYear
+
+		variation Variation
+			isDefault
+			relationship: 4266d993-8b55-4511-a8be-29be1ec75a82
+			defaultHierarchy: LocalDateTable_ef34a3ff-4085-4eda-a1df-b58a8db8be46.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: 45093c64-98f5-479d-b561-5a64f1187c78
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		dataType: string
+		lineageTag: 99704d39-26b8-4cfd-99a7-7a2bc0153f19
+		summarizeBy: none
+		sourceColumn: DayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a2c72251-fcb1-42f8-a98b-344834b9b05a
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: 4dbda24e-0393-4fb8-875f-dc75bb0f4340
+			defaultHierarchy: LocalDateTable_2c2a61ff-39c4-4f0c-97ac-a6a7efb97db4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Day of Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e6cbecc-871b-4910-8b0d-1d683813344e
+		summarizeBy: sum
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: 1b5bb41e-a282-4d0d-ba03-3070abfafb17
+		summarizeBy: none
+		sourceColumn: Day Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year.1'
+		dataType: int64
+		formatString: 0
+		lineageTag: a14b2129-b909-440e-9c72-3f3b84d7577e
+		summarizeBy: sum
+		sourceColumn: Year.1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month.1'
+		dataType: int64
+		formatString: 0
+		lineageTag: 593c2d14-7c6c-435e-9318-6b7ab7ab756e
+		summarizeBy: sum
+		sourceColumn: Month.1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6567750f-cc93-4c2e-8457-9c924914d4bf
+		summarizeBy: none
+		sourceColumn: End of Month
+
+		variation Variation
+			isDefault
+			relationship: 0aac270f-953e-4d46-a716-400699dc5bed
+			defaultHierarchy: LocalDateTable_39bba987-77ed-4008-8322-dd29e2cc2f25.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ShortDayName = left(DimDate[DayName],3)
+		lineageTag: 543be405-a649-416c-b37a-c5876bf70e58
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShortDayName2 = SUBSTITUTE(DimDate[Day Name],"day","")
+		lineageTag: 438b35c4-12a3-47b1-b4e1-1cba04d82d23
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek = WEEKDAY(DimDate[Date].[Date],2)
+		formatString: 0
+		lineageTag: 94b75835-3be6-4636-903c-f66b214f60fc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekend = IF(DimDate[DayOfWeek] = 6 || DimDate[DayOfWeek] = 7, "Weekend", "Weekday")
+		lineageTag: 497ce406-9e57-4a61-8a87-7e23c027a9d6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNum = WEEKNUM(DimDate[Date].[Date])
+		formatString: 0
+		lineageTag: a936fc70-e34f-48f0-8963-9d062ff8c8a5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Years = YEAR(DimDate[Date].[Date])
+		formatString: 0
+		lineageTag: 9185cd61-fc0d-4f59-9b75-c96579262337
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Months = MONTH(DimDate[Date])
+		formatString: 0
+		lineageTag: ab9d6909-59f0-4fe8-a2f6-1481707e54f1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimDate.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"Year", Int64.Type}, {"Month", type text}, {"MonthPeriod", Int64.Type}, {"MonthYear", type date}, {"Day", Int64.Type}, {"DayName", type text}}),
+				    #"Inserted Start of Month" = Table.AddColumn(#"Changed Type", "Start of Month", each Date.StartOfMonth([Date]), type date),
+				    #"Inserted Day of Week" = Table.AddColumn(#"Inserted Start of Month", "Day of Week", each Date.DayOfWeek([Date]), Int64.Type),
+				    #"Inserted Day Name" = Table.AddColumn(#"Inserted Day of Week", "Day Name", each Date.DayOfWeekName([Date]), type text),
+				    #"Inserted End of Week" = Table.AddColumn(#"Inserted Day Name", "End of Week", each Date.EndOfWeek([Date]), type date),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted End of Week",{"End of Week"}),
+				    #"Inserted Year" = Table.AddColumn(#"Removed Columns", "Year.1", each Date.Year([Date]), Int64.Type),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Year", "Month.1", each Date.Month([Date]), Int64.Type),
+				    #"Inserted End of Month" = Table.AddColumn(#"Inserted Month", "End of Month", each Date.EndOfMonth([Date]), type date),
+				    #"Added Conditional Column" = Table.AddColumn(#"Inserted End of Month", "Custom", each if [Day Name] = "saturday || sunday" then "weekend" else "weekday"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"Custom"})
+				in
+				    #"Removed Columns1"
+
+	annotation PBI_ResultType = Table
+

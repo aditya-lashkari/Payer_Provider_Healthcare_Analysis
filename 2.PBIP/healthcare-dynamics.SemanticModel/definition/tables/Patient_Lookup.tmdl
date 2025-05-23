@@ -1,0 +1,301 @@
+table Patient_Lookup
+	lineageTag: 46544736-353c-481a-841f-6c9a9d6cbdb5
+
+	column dimPatientPK
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 8c225935-2f91-4809-8de0-eaf19c164f3f
+		summarizeBy: none
+		sourceColumn: dimPatientPK
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 87cc124d-20a0-4de9-8711-823e35e133b4
+		summarizeBy: sum
+		sourceColumn: PatientNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstName
+		dataType: string
+		lineageTag: 42f11d5d-e93a-4a78-8270-669abe7ce674
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: 1b406434-8a5d-4b1b-ab42-8c10ce605154
+		summarizeBy: none
+		sourceColumn: LastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 9bb3a937-0118-4645-8e0a-be5621d92afa
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientGender
+		dataType: string
+		lineageTag: 2b659fc1-d797-47fd-9d9f-17c5bb68c311
+		summarizeBy: none
+		sourceColumn: PatientGender
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientAge
+		dataType: int64
+		formatString: 0
+		lineageTag: af803339-ed0b-42ad-aead-c33dd82c5d73
+		summarizeBy: sum
+		sourceColumn: PatientAge
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PatientHeight(in cms)'
+		dataType: int64
+		formatString: 0
+		lineageTag: ae1794bc-ec70-4796-9249-6cfcee9a20ed
+		summarizeBy: sum
+		sourceColumn: PatientHeight(in cms)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year of Birth'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6af739bd-b528-42f5-aacd-5b06fbb7bbb4
+		summarizeBy: sum
+		sourceColumn: Year of Birth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 67c9e86a-391e-4d16-8cc4-f409c10a5150
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e39b3f1-9f7e-4788-a494-170a7aff9cdf
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column BloodGroup
+		dataType: string
+		lineageTag: 974f8ddc-b5bc-4319-9bb6-59896454b14f
+		summarizeBy: none
+		sourceColumn: BloodGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tobacco
+		dataType: string
+		lineageTag: 41811f71-4ac2-4aff-a02d-ef51294c8bbc
+		summarizeBy: none
+		sourceColumn: Tobacco
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alcohol
+		dataType: string
+		lineageTag: 789e7df5-5c77-4e02-a41f-550d731362f6
+		summarizeBy: none
+		sourceColumn: Alcohol
+
+		annotation SummarizationSetBy = Automatic
+
+	column Exercise
+		dataType: string
+		lineageTag: 6d2ed448-c92e-43b6-b992-13698cd8ca24
+		summarizeBy: none
+		sourceColumn: Exercise
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diet
+		dataType: string
+		lineageTag: 63f2e09c-01e7-4cdc-97be-92a691fcca9f
+		summarizeBy: none
+		sourceColumn: Diet
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ethinicity
+		dataType: string
+		lineageTag: 389d6b8f-f143-4ff4-a0bf-b3843d584883
+		summarizeBy: none
+		sourceColumn: Ethinicity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Codes'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ca1f4b4-a5ac-4d38-92fd-f0ca9261d2fc
+		summarizeBy: sum
+		sourceColumn: Zip Codes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State Code'
+		dataType: string
+		lineageTag: 94c905d9-4848-43d1-a3e7-dd67522d0ce0
+		summarizeBy: none
+		sourceColumn: State Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 1b227d1e-d013-4a57-b06b-73dbcb3a2ef4
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 1ecb4a8f-82da-408c-86b0-f462d82bad7a
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 64a40963-b0bc-43cf-ba5a-3ba3b2b7c294
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateOfBirth = DATE(Patient_Lookup[Year of Birth],Patient_Lookup[Month],Patient_Lookup[Day])
+		formatString: Short Date
+		lineageTag: 3098e1b0-80cc-4f64-8433-e5958f4b0ac3
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: b7755729-6fe2-4791-831e-76e2267653b2
+			defaultHierarchy: LocalDateTable_d31a6fc7-dba3-4410-a53a-de9bb2d5b1c2.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MonthName = Patient_Lookup[DateOfBirth].[Month]
+		lineageTag: c92e1c05-72d7-4c88-bf3c-a1aa9bb3f902
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ageofPatient = DATEDIFF(Patient_Lookup[DateOfBirth],TODAY(),YEAR)
+		formatString: 0
+		lineageTag: 16e75c8a-0b9d-4e2b-9326-62a76beeefcc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientFullName = Patient_LookUp[FirstName]&" "&Patient_LookUp[LastName]
+		lineageTag: 05da4218-5d33-4f0a-b79c-bfb6e8ac02b6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age>50 = if(Patient_LookUp[PatientAge] > 50, "Yes", "No")
+		lineageTag: faee2a97-d886-40a9-8105-34fdeb7e9ee6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patient_AT = AND(Patient_LookUp[Alcohol]="Yes", Patient_LookUp[Tobacco]="Yes")
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: df697c34-2c91-4242-81ac-176b6cdd1a78
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patient_ATD = ```
+			((Patient_LookUp[Alcohol] = "Yes") && 
+			    (Patient_LookUp[Tobacco] = "Yes") && 
+			    (Patient_LookUp[Diet] = "Yes"))
+			```
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c6c6e183-bb8e-4a06-b694-59f5f67b709c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionCode = ```
+			SWITCH(Patient_LookUp[Region],"West","W",
+			    "South","S",
+			    "Northeast","NE",
+			    "Midwest","MW"
+			    
+			)
+			```
+		lineageTag: 0754f873-0b8e-4951-a719-b423c4d7f9b0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patient_!AT = AND(Patient_LookUp[Alcohol]="No",Patient_LookUp[Tobacco]="No")
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: eeabd7a1-d5eb-42f6-9e34-35f2b7f40a0e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column fn = CONCATENATE(Patient_Lookup[FirstName],Patient_Lookup[LastName])
+		lineageTag: 553cdf72-c562-4362-9225-e75419cd7d98
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PatientFullName_UPPER = UPPER(Patient_LookUp[PatientFullName])
+		lineageTag: ee83503b-878d-4948-845a-bcadabb55773
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rounded Age' = ```
+			ROUND('Patient_Lookup'[PatientAge], 0)
+			
+			```
+		formatString: 0
+		lineageTag: a1f1acdc-8c8f-4ed3-8304-076240ce4cf5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Patient_Lookup = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("G:\My Documents\Data Analytics\Power BI\Material\DataModel\DimPatient.csv"),[Delimiter=",", Columns=22, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dimPatientPK", Int64.Type}, {"PatientNumber", Int64.Type}, {"FirstName", type text}, {"LastName", type text}, {"Email", type text}, {"PatientGender", type text}, {"PatientAge", Int64.Type}, {"PatientHeight(in cms)", Int64.Type}, {"Year of Birth", Int64.Type}, {"Month", Int64.Type}, {"Day", Int64.Type}, {"BloodGroup", type text}, {"Tobacco", type text}, {"Alcohol", type text}, {"Exercise", type text}, {"Diet", type text}, {"Ethinicity", type text}, {"Zip Codes", Int64.Type}, {"State Code", type text}, {"City", type text}, {"State", type text}, {"Region", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,42 @@
+table BadDebtTable
+	lineageTag: c1bc4d2b-574f-4d7a-a66d-aaed18815181
+
+	column dimTransactionPK
+		formatString: 0
+		lineageTag: d955dc2d-6820-4a4d-946b-aab67c2390b0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Trancstion_Lookup[dimTransactionPK]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionType
+		lineageTag: 05e7314a-8667-46b7-89eb-3afc33c34a69
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Trancstion_Lookup[TransactionType]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction
+		lineageTag: 0ab7d045-ed39-492b-9109-3ec684859053
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Trancstion_Lookup[Transaction]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AdjustmentReason
+		lineageTag: 47d17ab5-7f72-461d-9f35-81706c4829cd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Trancstion_Lookup[AdjustmentReason]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BadDebtTable = calculated
+		mode: import
+		source = FILTER(Trancstion_Lookup,Trancstion_Lookup[AdjustmentReason] = "Bad Debt")
+
+	annotation PBI_Id = bded3153502942d8849ad74424184688
+
